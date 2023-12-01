@@ -1,11 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <script
+      src="https://unpkg.com/htmx.org@1.9.9"
+      integrity="sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX"
+      crossorigin="anonymous"
+    ></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FDA Drugsearch</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Search drugs</h1>
-</body>
+
+    <input
+      type="search"
+      name="search"
+      placeholder="SearchDrugs"
+      hx-post="/search"
+      hx-trigger="input changed delay:500ms, search"
+      hx-target="#search-results"
+      hx-indicator=".htmx-indicator"
+    />
+
+    <table>
+      <thead>
+        <tr>
+          <th>Drug Name</th>
+        </tr>
+      </thead>
+      <tbody id="search-results">
+        {{ block "Drugs" . }}
+          {{ range . }}
+            <tr>
+              <td>{{ . }}</td>
+            </tr>
+          {{ end }}
+        {{ end }}
+      </tbody>
+    </table>
+  </body>
 </html>
